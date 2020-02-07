@@ -1,0 +1,11 @@
+id	id_city	name	star_rating	distance_from_center	property_type
+1	10	Arris	5	5	apartment
+2	9	Sonder	3	1	apart-hotel
+3	8	BonBon	3	0.85	hotel
+4	7	Realm	5	3	hotel
+5	6	CityCentral	4	0.8	hotel
+6	5	Tor	3	3	hotel
+7	4	Phenix	2	4	hotel
+8	3	Radisson	4	15	hotel
+9	2	Farina	4	2	hotel
+10	1	Hilton	5	1	hotel
