@@ -1,7 +1,9 @@
-package com.softserve;
+package com.softserve.entity;
 
-@Entity
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
+    private static final long serialVersionUID = 1L;
     private int iD;
     private String firstName;
     private String lastName;
