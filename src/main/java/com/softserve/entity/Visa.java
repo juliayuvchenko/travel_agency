@@ -1,32 +1,25 @@
 package com.softserve.entity;
 
-import com.sun.javafx.beans.IDProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
-@Entity
-@Table(name = "person")
+import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person implements Serializable {
+@Entity
+public class Visa implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private String firstName;
+    private int visa_number;
     @Column
-    private String lastName;
+    private Date issue;
     @Column
-    private String passport;
-    @Column
-    private int age;
-    @Column
-    private int visa;
-
+    private Date expiration;
 }
