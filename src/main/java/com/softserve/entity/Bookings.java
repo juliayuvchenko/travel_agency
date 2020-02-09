@@ -1,32 +1,31 @@
 package com.softserve.entity;
 
-import com.sun.javafx.beans.IDProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-
+import java.util.Date;
 @Entity
-@Table(name = "person")
+@Table(name = "bookings")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Person implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Bookings implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    private String firstName;
+    private int id_person;
     @Column
-    private String lastName;
+    private Date checkin;
     @Column
-    private String passport;
+    private Date checkout;
     @Column
-    private int age;
+    private int id_room;
     @Column
-    private int visa;
-
+    private int id_hotel;
+    private Person person;
+    private Rooms rooms;
 }
