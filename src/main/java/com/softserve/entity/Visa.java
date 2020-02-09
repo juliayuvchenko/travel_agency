@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 @Data
+@Table(name = "visa")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity

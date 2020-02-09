@@ -8,10 +8,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@Table(name = "rooms")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Rooms implements Serializable {
+ class Rooms implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
