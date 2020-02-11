@@ -1,38 +1,55 @@
 package com.softserve;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import com.softserve.entity.Country;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
 
 /**
  * Unit test for simple App.
  */
-public class AppTest 
-    extends TestCase
+public class AppTest
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
+    private static SessionFactory sessionFactory = null;
+
+    @BeforeClass
+    public static void setUp() throws Exception
     {
-        super( testName );
+        sessionFactory = new Configuration().configure().buildSessionFactory();
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.createQuery("DELETE FROM Country").executeUpdate();
+        session.getTransaction().commit();
+        session.close();
     }
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
+    @AfterClass
+    public static void tearDown() throws Exception
     {
-        return new TestSuite( AppTest.class );
+        sessionFactory.close();
     }
 
-    /**
-     * Rigourous Test :-)
-     */
-    public void testApp()
+    @Test
+    public void testSaveOperation()
     {
-        assertTrue( true );
+        System.out.println( "testSaveOperation begins ........ This is \"C\" of CRUD" );
+        Country country = new Country( 123, "Ukraine" );
+        Country country2 = new Country( 1234, "USA" );
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        session.save( country );
+        session.save( country2 );
+
+        session.getTransaction().commit();
+        session.close();
+        System.out.println( "testSaveOperation ends ......." );
+
     }
+
 }

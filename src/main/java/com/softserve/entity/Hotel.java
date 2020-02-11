@@ -1,7 +1,10 @@
 package com.softserve.entity;
 
-import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,11 +15,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "hotels")
-public class Hotel implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Hotel{
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column
     private String name;
+    @Column
     private int star_rating;
+    @Column
     private String property_type;
-
 }
