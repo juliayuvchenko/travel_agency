@@ -5,17 +5,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
 
 @Entity
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Table(name = "cities")
 public class City {
     @Id
@@ -32,7 +25,6 @@ public class City {
 
     @ManyToOne
     @JoinColumn(name ="id_country")
-//    @JoinTable(name = "cities",  joinColumns = @JoinColumn(name = "id_country"))
     private Country country;
 
     public int getId() {
@@ -58,12 +50,5 @@ public class City {
     public void setCountry(Country country) {
         this.country = country;
     }
-
-
-
-
-//
-   // @OneToMany(mappedBy="cities")
-    //private Set<Hotel> hotelsSet;
 
 }

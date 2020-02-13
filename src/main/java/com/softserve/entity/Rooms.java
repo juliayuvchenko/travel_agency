@@ -5,19 +5,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "rooms")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
- class Rooms {
+ public class Rooms {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column
     private int room_number;
@@ -26,10 +22,63 @@ import lombok.NoArgsConstructor;
     @Column
     private Bedrooms bedrooms;
 
-    public enum Luxury{
+   public Rooms() {
+   }
+
+   public Rooms(int room_number, Luxury luxury, Bedrooms bedrooms) {
+      this.room_number = room_number;
+      this.luxury = luxury;
+      this.bedrooms = bedrooms;
+   }
+   @ManyToOne
+   @JoinColumn(name ="id_hotel")
+   private Hotel hotel;
+
+
+   public enum Luxury{
         ECONOM, STANDARD, BUSINESS, PREMIUM
     }
     public enum Bedrooms {
         SINGLE, DOUBLE, TRIPLE, APARTMENT
     }
+
+   public int getId() {
+      return id;
+   }
+
+   public void setId(int id) {
+      this.id = id;
+   }
+
+   public int getRoom_number() {
+      return room_number;
+   }
+
+   public void setRoom_number(int room_number) {
+      this.room_number = room_number;
+   }
+
+   public Luxury getLuxury() {
+      return luxury;
+   }
+
+   public void setLuxury(Luxury luxury) {
+      this.luxury = luxury;
+   }
+
+   public Bedrooms getBedrooms() {
+      return bedrooms;
+   }
+
+   public void setBedrooms(Bedrooms bedrooms) {
+      this.bedrooms = bedrooms;
+   }
+
+   public Hotel getHotel() {
+      return hotel;
+   }
+
+   public void setHotel(Hotel hotel) {
+      this.hotel = hotel;
+   }
 }
