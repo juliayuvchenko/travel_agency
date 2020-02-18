@@ -34,14 +34,24 @@ import javax.persistence.Table;
    @JoinColumn(name ="id_hotel")
    private Hotel hotel;
 
+    @ManyToOne
+   @JoinColumn(name = "id_rooms")
+   private Bookings booking = new Bookings();
 
-   public enum Luxury{
+
+    public enum Luxury{
         ECONOM, STANDARD, BUSINESS, PREMIUM
     }
     public enum Bedrooms {
         SINGLE, DOUBLE, TRIPLE, APARTMENT
     }
+    public Bookings getBooking() {
+        return booking;
+    }
 
+    public void setBooking(Bookings booking) {
+        this.booking = booking;
+    }
    public int getId() {
       return id;
    }

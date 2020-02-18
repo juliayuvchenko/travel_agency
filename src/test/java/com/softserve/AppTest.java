@@ -1,14 +1,15 @@
 package com.softserve;
 
+import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
+import com.softserve.entity.Person;
 import com.softserve.entity.Rooms;
-import java.util.List;
+import com.softserve.entity.Visa;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.type.CurrencyType;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,6 +33,9 @@ public class AppTest
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         session.createQuery("DELETE FROM Rooms").executeUpdate();
+        session.createQuery("DELETE FROM Bookings").executeUpdate();
+        session.createQuery("DELETE FROM Visa").executeUpdate();
+        session.createQuery("DELETE FROM Person").executeUpdate();
         session.createQuery("DELETE FROM Hotel").executeUpdate();
         session.createQuery("DELETE FROM City").executeUpdate();
         session.createQuery("DELETE FROM Country").executeUpdate();
@@ -143,7 +147,72 @@ public class AppTest
         System.out.println( "testSaveOperation ends ......." );
 
     }
+    @Test
+    public void testSaveVisa() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        Person person = new Person("Lolik", "Zhukin", "FD23111", 30, 2);
+        session.save(person);
+        Person person2 = new Person("Julia", "Maksimiv", "KT45231", 25, 1);
+        session.save(person2);
+        Person person3 = new Person("Alex", "Rosa", "KL34112", 45, 3);
+        session.save(person3);
 
+        Country c_usa = new Country("USA");
+        session.save(c_usa);
+        Country c_poland = new Country("Poland");
+        session.save(c_poland);
+
+        Visa usa1 = new Visa("2018-05-05", "2028-11-20");
+        usa1.setCountry(c_usa);
+        usa1.setPerson(person);
+        session.save(usa1);
+
+        Visa usa2 = new Visa("2018-05-05", "2028-11-20");
+        usa2.setCountry(c_usa);
+        usa2.setPerson(person2);
+        session.save(usa2);
+
+        Visa poland = new Visa("2019-06-21", "2020-06-25");
+        poland.setPerson(person);
+        poland.setCountry(c_poland);
+        session.save(poland);
+
+        session.getTransaction().commit();
+        session.close();
+    }
+
+    @Test
+    public void testSaveBookings() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Country country = new Country( "Ukraine");
+        session.save(country);
+        City lviv = new City("Lviv");
+        lviv.setCountry(country);
+        session.save(lviv);
+        Hotel h2 = new Hotel("GrandHotel", 5, 1,"hotel");
+        h2.setCity(lviv);
+        session.save(h2);
+        Person person = new Person("Lolik", "Zhukin", "FD23111", 30, 2);
+        session.save(person);
+        Rooms r1 = new Rooms(1, BUSINESS, DOUBLE);
+        r1.setHotel(h2);
+
+
+
+        Bookings book = new Bookings("2020-05-16", "2020-06-16");
+        book.setHotel(h2);
+        //book.getRoom().add(r1);
+        book.setPerson(person);
+       r1.setBooking(book);
+        session.save(r1);
+        session.save(book);
+
+        session.getTransaction().commit();
+        session.close();
+    }
 
 
 }

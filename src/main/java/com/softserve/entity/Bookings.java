@@ -1,35 +1,56 @@
 package com.softserve.entity;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "bookings")
 public class Bookings{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @Column
-    private int id_person;
+    private String checkin;
     @Column
-    private LocalDate checkin;
-    @Column
-    private LocalDate checkout;
-    @Column
-    private int id_room;
-    @Column
-    private int id_hotel;
+    private String checkout;
 
     public Bookings() {
     }
-    public Bookings(LocalDate checkin, LocalDate checkout) {
+    public Bookings(String checkin, String checkout) {
         this.checkin = checkin;
         this.checkout = checkout;
+    }
+
+    @OneToMany(mappedBy = "booking")
+    private Collection<Rooms> room = new ArrayList<Rooms>();
+
+    @OneToOne
+    @JoinColumn(name ="id_hotel")
+    private Hotel hotel;
+
+    @OneToOne
+    @JoinColumn(name ="id_person")
+    private Person person;
+
+
+
+
+    public Collection<Rooms> getRoom() {
+        return room;
+    }
+
+    public void setRoom(Collection<Rooms> room) {
+        this.room = room;
     }
 
     public int getId() {
@@ -40,43 +61,38 @@ public class Bookings{
         this.id = id;
     }
 
-    public int getId_person() {
-        return id_person;
-    }
-
-    public void setId_person(int id_person) {
-        this.id_person = id_person;
-    }
-
-    public LocalDate getCheckin() {
+    public String getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(LocalDate checkin) {
+    public void setCheckin(String checkin) {
         this.checkin = checkin;
     }
 
-    public LocalDate getCheckout() {
+    public String getCheckout() {
         return checkout;
     }
 
-    public void setCheckout(LocalDate checkout) {
+    public void setCheckout(String checkout) {
         this.checkout = checkout;
     }
 
-    public int getId_room() {
-        return id_room;
+
+
+    public Hotel getHotel() {
+        return hotel;
     }
 
-    public void setId_room(int id_room) {
-        this.id_room = id_room;
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
     }
 
-    public int getId_hotel() {
-        return id_hotel;
+    public Person getPerson() {
+        return person;
     }
 
-    public void setId_hotel(int id_hotel) {
-        this.id_hotel = id_hotel;
+    public void setPerson(Person person) {
+        this.person = person;
     }
+
 }
