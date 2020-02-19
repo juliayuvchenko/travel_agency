@@ -126,7 +126,7 @@
           </execution>
         </executions>
         <configuration>
-          <webappDirectory>src/main/java/webapp</webappDirectory>
+          <webappDirectory>target/webapp</webappDirectory>
           <attachClasses>true</attachClasses>
         </configuration>
       </plugin>
