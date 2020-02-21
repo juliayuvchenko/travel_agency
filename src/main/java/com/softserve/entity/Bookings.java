@@ -2,7 +2,6 @@ package com.softserve.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,10 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "bookings")
-public class Bookings{
+public class Bookings {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private String checkin;
     @Column
@@ -26,6 +25,7 @@ public class Bookings{
 
     public Bookings() {
     }
+
     public Bookings(String checkin, String checkout) {
         this.checkin = checkin;
         this.checkout = checkout;
@@ -35,15 +35,12 @@ public class Bookings{
     private Collection<Rooms> room = new ArrayList<Rooms>();
 
     @OneToOne
-    @JoinColumn(name ="id_hotel")
+    @JoinColumn(name = "id_hotel")
     private Hotel hotel;
 
     @OneToOne
-    @JoinColumn(name ="id_person")
+    @JoinColumn(name = "id_person")
     private Person person;
-
-
-
 
     public Collection<Rooms> getRoom() {
         return room;
@@ -53,11 +50,11 @@ public class Bookings{
         this.room = room;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -76,8 +73,6 @@ public class Bookings{
     public void setCheckout(String checkout) {
         this.checkout = checkout;
     }
-
-
 
     public Hotel getHotel() {
         return hotel;

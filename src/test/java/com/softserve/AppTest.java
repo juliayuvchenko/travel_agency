@@ -7,6 +7,9 @@ import com.softserve.entity.Hotel;
 import com.softserve.entity.Person;
 import com.softserve.entity.Rooms;
 import com.softserve.entity.Visa;
+import com.softserve.service.TravelService;
+import com.softserve.service.TravelServiceImp;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
@@ -17,6 +20,7 @@ import org.junit.Test;
 import static com.softserve.entity.Rooms.Bedrooms.APARTMENT;
 import static com.softserve.entity.Rooms.Bedrooms.DOUBLE;
 import static com.softserve.entity.Rooms.Luxury.BUSINESS;
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -25,10 +29,10 @@ import static com.softserve.entity.Rooms.Luxury.BUSINESS;
 public class AppTest
 {
     private static SessionFactory sessionFactory = null;
-
+   static TravelService travelService;
     @BeforeClass
-    public static void setUp() throws Exception
-    {
+    public static void setUp() throws Exception {
+        travelService = TravelServiceImp.travelService;
         sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -52,20 +56,42 @@ public class AppTest
     @Test
     public void testSaveCountries()
     {
-        System.out.println( "testSaveOperation begins ........ This is \"C\" of CRUD" );
+        System.out.println( "testSaveCountries begins ........ This is \"C\" of CRUD" );
 
         Session session = sessionFactory.openSession();
         session.beginTransaction();
 
         Country country = new Country( "Ukraine");
-        Country country2 = new Country( "USA" );
+      //  Country country2 = new Country( "USA" );
         session.save( country );
-        session.save( country2 );
+      //  session.save( country2 );
 
         session.getTransaction().commit();
         session.close();
-        System.out.println( "testSaveOperation ends ......." );
+        System.out.println( "testSaveCountries ends ......." );
 
+    }
+
+    @Test
+    public void testRetrieveCountries(){
+        System.out.println( "testRetriveCountries begins .......This is \"R\" of CRUD" );
+
+        Session session = sessionFactory.openSession();
+       session.beginTransaction();
+        Country country = new Country( "Ukraine");
+        session.save( country );
+        session.getTransaction().commit();
+        session.close();
+
+        Session session1 = sessionFactory.openSession();
+       // session1.beginTransaction();
+        Country country1 = session1.get(Country.class, country.getId());
+
+       // session1.getTransaction().commit();
+        System.out.println( "Retrieved country from DB is " + country );
+        session1.close();
+        assertEquals( country.getId(), country1.getId() );
+        System.out.println( "testRetriveCountries ends ......." );
     }
 
     @Test
@@ -117,7 +143,9 @@ public class AppTest
         session.getTransaction().commit();
         session.close();
         System.out.println( "testSaveOperation ends ......." );
-
+        List<Hotel> findHotels =travelService.findHotelByCity(lviv);
+        assertEquals(1, findHotels.size());
+        assertEquals(h2, (findHotels.get(0)));
     }
 
     @Test
@@ -133,13 +161,22 @@ public class AppTest
         Hotel h2 = new Hotel("GrandHotel", 5, 1,"hotel");
         h2.setCity(lviv);
         session.save(h2);
+        Person person = new Person("Lolik", "Zhukin", "FD23111", 30, 2);
+        session.save(person);
+        Bookings book = new Bookings("2020-05-16", "2020-06-16");
+        book.setHotel(h2);
+        //book.getRoom().add(r1);
+        book.setPerson(person);
 
         Rooms r1 = new Rooms(1, BUSINESS, DOUBLE);
         r1.setHotel(h2);
+        r1.setBooking(book);
         session.save(r1);
+        session.save(book);
 
         Rooms r2 = new Rooms(2, BUSINESS, APARTMENT);
         r2.setHotel(h2);
+        r2.setBooking(book);
         session.save(r2);
 
         session.getTransaction().commit();

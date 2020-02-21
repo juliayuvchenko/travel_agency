@@ -1,8 +1,8 @@
 package com.softserve.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,10 +12,10 @@ import javax.persistence.Table;
 
 @Table(name = "visa")
 @Entity
-public class Visa{
+public class Visa {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private String issue;
     @Column
@@ -24,7 +24,7 @@ public class Visa{
     public Visa() {
     }
 
-    public Visa( String issue, String expiration) {
+    public Visa(String issue, String expiration) {
         this.issue = issue;
         this.expiration = expiration;
     }
@@ -38,11 +38,11 @@ public class Visa{
     }
 
     @ManyToOne
-    @JoinColumn (name = "id_person")
+    @JoinColumn(name = "id_person")
     private Person person;
 
     @ManyToOne
-    @JoinColumn( name = "id_country")
+    @JoinColumn(name = "id_country")
     private Country country;
 
     public Country getCountry() {
@@ -53,11 +53,11 @@ public class Visa{
         this.country = country;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -75,6 +75,26 @@ public class Visa{
 
     public void setExpiration(String expiration) {
         this.expiration = expiration;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Visa)) {
+            return false;
+        }
+        Visa visa = (Visa) o;
+        return getId() == visa.getId() &&
+            Objects.equals(getIssue(), visa.getIssue()) &&
+            Objects.equals(getExpiration(), visa.getExpiration()) &&
+            Objects.equals(getPerson(), visa.getPerson()) &&
+            Objects.equals(getCountry(), visa.getCountry());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getIssue(), getExpiration(), getPerson(), getCountry());
     }
 
 }

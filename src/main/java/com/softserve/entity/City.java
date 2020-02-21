@@ -1,5 +1,6 @@
 package com.softserve.entity;
 
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 public class City {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private String city;
 
     public City() {
@@ -24,14 +25,14 @@ public class City {
     }
 
     @ManyToOne
-    @JoinColumn(name ="id_country")
+    @JoinColumn(name = "id_country")
     private Country country;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -51,4 +52,22 @@ public class City {
         this.country = country;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof City)) {
+            return false;
+        }
+        City city1 = (City) o;
+        return getId() == city1.getId() &&
+            Objects.equals(getCity(), city1.getCity()) &&
+            Objects.equals(getCountry(), city1.getCountry());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCity(), getCountry());
+    }
 }
