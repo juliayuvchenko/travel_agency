@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -64,8 +65,8 @@ public class Country {
         }
         Country country1 = (Country) o;
         return getId() == country1.getId() &&
-            Objects.equals(getCountry(), country1.getCountry()); //&&
-        //  Objects.equals(getVisa(), country1.getVisa());
+            Objects.equals(getCountry(), country1.getCountry());//&&
+         //Objects.equals(getVisa(), country1.getVisa());
     }
 
     @Override

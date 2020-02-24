@@ -5,25 +5,23 @@ import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
 import com.softserve.entity.Person;
 import com.softserve.entity.Visa;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
-import jdk.vm.ci.meta.Local;
 
 public interface TravelService {
 
-public List<Country> findCountry();
+    List<Country> findCountry();
 
-public List<Hotel> findHotelByCity(City city);
+    List<Hotel> findHotelByCity(City city);
 
-public boolean findHotelByDate(Hotel hotel, LocalDate date);
+    boolean findHotelByDate(Hotel hotel, java.sql.Date date);
 
-public List<Hotel> findAvailableHotel(City city, LocalDate date);
+    List<Hotel> findAvailableHotel(City city, java.sql.Date date);
 
-public  List<Visa> amountOfVisaPerson(Person person);
+    List<Visa> amountOfVisaPerson(Person person);
 
-public int amountOfVisaCountry(Country country);
+    int amountOfVisaCountry(Country country);
 
-public boolean bookHotelForPerson(Person person, Hotel hotel, LocalDate date);
+    boolean bookHotelForPerson(Person person, Hotel hotel, java.sql.Date date);
+
 
 }

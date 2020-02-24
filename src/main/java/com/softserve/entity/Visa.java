@@ -17,14 +17,14 @@ public class Visa {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     @Column
-    private String issue;
+    private java.sql.Date issue;
     @Column
-    private String expiration;
+    private java.sql.Date expiration;
 
     public Visa() {
     }
 
-    public Visa(String issue, String expiration) {
+    public Visa(java.sql.Date issue, java.sql.Date expiration) {
         this.issue = issue;
         this.expiration = expiration;
     }
@@ -61,21 +61,38 @@ public class Visa {
         this.id = id;
     }
 
-    public String getIssue() {
+    public java.sql.Date getIssue() {
         return issue;
     }
 
-    public void setIssue(String issue) {
+    public void setIssue(java.sql.Date issue) {
         this.issue = issue;
     }
 
-    public String getExpiration() {
+    public java.sql.Date getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(String expiration) {
+    public void setExpiration(java.sql.Date expiration) {
         this.expiration = expiration;
     }
+
+    //    public String getIssue() {
+//        return issue;
+//    }
+//
+//    public void setIssue(String issue) {
+//        this.issue = issue;
+//    }
+//
+//    public String getExpiration() {
+//        return expiration;
+//    }
+//
+//    public void setExpiration(String expiration) {
+//        this.expiration = expiration;
+//    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -88,8 +105,8 @@ public class Visa {
         return getId() == visa.getId() &&
             Objects.equals(getIssue(), visa.getIssue()) &&
             Objects.equals(getExpiration(), visa.getExpiration()) &&
-            Objects.equals(getPerson(), visa.getPerson()) &&
-            Objects.equals(getCountry(), visa.getCountry());
+            Objects.equals(getPerson().getId(), visa.getPerson().getId()) &&
+            Objects.equals(getCountry().getId(), visa.getCountry().getId());
     }
 
     @Override
@@ -97,4 +114,14 @@ public class Visa {
         return Objects.hash(getId(), getIssue(), getExpiration(), getPerson(), getCountry());
     }
 
+    @Override
+    public String toString() {
+        return "Visa{" +
+            "id=" + id +
+            ", issue=" + issue +
+            ", expiration=" + expiration +
+            ", person=" + person +
+            ", country=" + country +
+            '}';
+    }
 }

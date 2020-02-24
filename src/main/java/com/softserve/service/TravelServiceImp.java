@@ -23,12 +23,21 @@ public static TravelService travelService = new TravelServiceImp();
 
     @Override
     public List<Country> findCountry() {
-        return null;
+        try(Session session = sessionFactory.openSession()){
+            String sql = "select * from countries";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Country.class);
+            return query.list();
+        }
+        catch (Exception e){
+            System.out.println("Failed findCountry");
+            throw e;
+        }
     }
 
     @Override
     public List<Hotel> findHotelByCity(City city) {
-        try(Session session = sessionFactory.openSession();){
+        try(Session session = sessionFactory.openSession()){
             String sql = "select * from hotels where id_city=:id";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Hotel.class);
@@ -42,27 +51,57 @@ public static TravelService travelService = new TravelServiceImp();
     }
 
     @Override
-    public boolean findHotelByDate(Hotel hotel, LocalDate date) {
+    public boolean findHotelByDate(Hotel hotel, java.sql.Date  date) {
         return false;
     }
 
     @Override
-    public List<Hotel> findAvailableHotel(City city, LocalDate date) {
-        return null;
+    public List<Hotel> findAvailableHotel(City city, java.sql.Date date) {
+        try (Session session = sessionFactory.openSession()){
+            String sql = "select * from hotel where id_city=:id";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Visa.class);
+            query.setParameter("id", city.getId());
+            return query.list();
+        }
+        catch (Exception e){
+            System.out.println("Failed findAvailableHotel" );
+            throw e;
+        }
     }
 
     @Override
     public List<Visa> amountOfVisaPerson(Person person) {
-        return null;
+        try (Session session = sessionFactory.openSession()){
+            String sql = "select * from visa where id_person=:id";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Visa.class);
+            query.setParameter("id", person.getId());
+            return query.list();
+        }
+        catch (Exception e){
+            System.out.println("Failed amountOfVisaPerson" + person);
+            throw e;
+        }
     }
 
     @Override
     public int amountOfVisaCountry(Country country) {
-        return 0;
+        try (Session session = sessionFactory.openSession()){
+            String sql = "select * from visa where id_country=:id";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Visa.class);
+            query.setParameter("id", country.getId());
+            return query.list().size();
+        }
+        catch (Exception e){
+            System.out.println("Failed amountOfVisaPerson" + country);
+            throw e;
+        }
     }
 
     @Override
-    public boolean bookHotelForPerson(Person person, Hotel hotel, LocalDate date) {
+    public boolean bookHotelForPerson(Person person, Hotel hotel, java.sql.Date date) {
         return false;
     }
 }

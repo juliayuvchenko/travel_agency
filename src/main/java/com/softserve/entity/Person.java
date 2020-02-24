@@ -3,8 +3,10 @@ package com.softserve.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -37,7 +39,7 @@ public class Person implements Serializable {
 
     }
 
-    @OneToMany( mappedBy = "person")
+    @OneToMany(mappedBy = "person")
     //@JoinTable(name = "person",  joinColumns = @JoinColumn( name = "visa_id" ))
     private Collection<Visa> visa = new ArrayList<Visa>();
 
@@ -89,4 +91,25 @@ public class Person implements Serializable {
         this.age = age;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Person)) {
+            return false;
+        }
+        Person person = (Person) o;
+        return getId() == person.getId() &&
+            getAge() == person.getAge() &&
+            Objects.equals(getFirstName(), person.getFirstName()) &&
+            Objects.equals(getLastName(), person.getLastName()) &&
+            Objects.equals(getPassport(), person.getPassport()) &&
+            Objects.equals(getVisa(), person.getVisa());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisa());
+    }
 }
