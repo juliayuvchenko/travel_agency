@@ -7,11 +7,13 @@
         <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/travel_agency</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.password">trinidad10</property>
         <property name="hibernate.connection.pool_size">1</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
         <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
         <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <mapping resource="person.hbm.xml"/>
         <mapping class="com.softserve.entity.Bookings"/>
         <mapping class="com.softserve.entity.City"/>
         <mapping class="com.softserve.entity.Country"/>

@@ -2,6 +2,7 @@ package com.softserve.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,15 +19,15 @@ import javax.persistence.Table;
 public class Bookings{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
-    private String checkin;
+    private java.sql.Date checkin;
     @Column
-    private String checkout;
+    private java.sql.Date checkout;
 
     public Bookings() {
     }
-    public Bookings(String checkin, String checkout) {
+    public Bookings(java.sql.Date checkin, java.sql.Date checkout) {
         this.checkin = checkin;
         this.checkout = checkout;
     }
@@ -53,30 +54,29 @@ public class Bookings{
         this.room = room;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getCheckin() {
+    public java.sql.Date getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(String checkin) {
+    public void setCheckin(java.sql.Date checkin) {
         this.checkin = checkin;
     }
 
-    public String getCheckout() {
+    public java.sql.Date getCheckout() {
         return checkout;
     }
 
-    public void setCheckout(String checkout) {
+    public void setCheckout(java.sql.Date checkout) {
         this.checkout = checkout;
     }
-
 
 
     public Hotel getHotel() {
@@ -95,4 +95,21 @@ public class Bookings{
         this.person = person;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bookings)) return false;
+        Bookings bookings = (Bookings) o;
+        return getId() == bookings.getId() &&
+                Objects.equals(getCheckin(), bookings.getCheckin()) &&
+                Objects.equals(getCheckout(), bookings.getCheckout()) &&
+                Objects.equals(getRoom(), bookings.getRoom()) &&
+                Objects.equals(getHotel(), bookings.getHotel()) &&
+                Objects.equals(getPerson(), bookings.getPerson());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCheckin(), getCheckout(), getRoom(), getHotel(), getPerson());
+    }
 }

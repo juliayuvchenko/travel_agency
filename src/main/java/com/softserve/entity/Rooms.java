@@ -8,13 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rooms")
  public class Rooms {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private int room_number;
     @Column
@@ -52,11 +53,11 @@ import javax.persistence.Table;
     public void setBooking(Bookings booking) {
         this.booking = booking;
     }
-   public int getId() {
+   public long getId() {
       return id;
    }
 
-   public void setId(int id) {
+   public void setId(long id) {
       this.id = id;
    }
 
@@ -91,4 +92,22 @@ import javax.persistence.Table;
    public void setHotel(Hotel hotel) {
       this.hotel = hotel;
    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rooms)) return false;
+        Rooms rooms = (Rooms) o;
+        return getId() == rooms.getId() &&
+                getRoom_number() == rooms.getRoom_number() &&
+                getLuxury() == rooms.getLuxury() &&
+                getBedrooms() == rooms.getBedrooms() &&
+                Objects.equals(getHotel(), rooms.getHotel()) &&
+                Objects.equals(getBooking(), rooms.getBooking());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel(), getBooking());
+    }
 }
