@@ -1,15 +1,18 @@
 package com.softserve.entity;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -24,17 +27,34 @@ public class Bookings {
     private java.sql.Date checkin;
     @Column
     private java.sql.Date checkout;
+    @Column
+    private int quantity;
+    @Column
+    private Rooms.Luxury luxury;
+    @Column
+    private Rooms.Bedrooms bedrooms;
+
 
     public Bookings() {
+
     }
 
-    public Bookings(java.sql.Date checkin,java.sql.Date checkout) {
-        this.checkin = checkin;
+    public Bookings(java.sql.Date checkin, java.sql.Date checkout, int quantity, Rooms.Luxury luxury,
+                    Rooms.Bedrooms bedrooms, City city) {
         this.checkout = checkout;
+        this.checkin = checkin;
+        this.quantity = quantity;
+        this.luxury = luxury;
+        this.bedrooms = bedrooms;
+        this.city = city;
     }
 
-    @OneToMany(mappedBy = "booking")
+    @OneToMany
     private Collection<Rooms> room = new ArrayList<Rooms>();
+
+    @OneToOne
+    @JoinColumn(name = "id_city")
+    private City city;
 
     @OneToOne
     @JoinColumn(name = "id_hotel")
@@ -44,14 +64,6 @@ public class Bookings {
     @JoinColumn(name = "id_person")
     private Person person;
 
-    public Collection<Rooms> getRoom() {
-        return room;
-    }
-
-    public void setRoom(Collection<Rooms> room) {
-        this.room = room;
-    }
-
     public long getId() {
         return id;
     }
@@ -60,20 +72,65 @@ public class Bookings {
         this.id = id;
     }
 
-    public java.sql.Date getCheckin() {
+    public Date getCheckin() {
         return checkin;
     }
 
-    public void setCheckin(java.sql.Date checkin) {
+    public void setCheckin(Date checkin) {
         this.checkin = checkin;
     }
 
-    public java.sql.Date getCheckout() {
-        return checkout;
+    public LocalDate getCheckout() {
+        return checkout.toLocalDate();
     }
 
-    public void setCheckout(java.sql.Date checkout) {
+    public void setCheckout(Date checkout) {
         this.checkout = checkout;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Rooms.Luxury getLuxury() {
+        return luxury;
+    }
+
+    public void setLuxury(Rooms.Luxury luxury) {
+        this.luxury = luxury;
+    }
+
+    public Rooms.Bedrooms getBedrooms() {
+        return bedrooms;
+    }
+
+    public void setBedrooms(Rooms.Bedrooms bedrooms) {
+        this.bedrooms = bedrooms;
+    }
+
+    public Collection<Rooms> getRoom() {
+        return room;
+    }
+
+    public Collection<Rooms> getAddRoom(Rooms rooms) {
+        room.add(rooms);
+        return room;
+    }
+
+    public void setRoom(Collection<Rooms> room) {
+        this.room = room;
+    }
+
+    public City getCity() {
+        return city;
+    }
+
+    public void setCity(City city) {
+        this.city = city;
     }
 
     public Hotel getHotel() {
@@ -102,15 +159,19 @@ public class Bookings {
         }
         Bookings bookings = (Bookings) o;
         return getId() == bookings.getId() &&
+            getQuantity() == bookings.getQuantity() &&
             Objects.equals(getCheckin(), bookings.getCheckin()) &&
             Objects.equals(getCheckout(), bookings.getCheckout()) &&
+            getLuxury() == bookings.getLuxury() &&
+            getBedrooms() == bookings.getBedrooms() &&
             Objects.equals(getRoom(), bookings.getRoom()) &&
+            Objects.equals(getCity(), bookings.getCity()) &&
             Objects.equals(getHotel(), bookings.getHotel()) &&
             Objects.equals(getPerson(), bookings.getPerson());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCheckin(), getCheckout(), getRoom(), getHotel(), getPerson());
+        return Objects.hash(getId(), getCheckin(), getCheckout(), getQuantity(), getLuxury(), getBedrooms(), getRoom(), getCity(), getHotel(), getPerson());
     }
 }

@@ -7,6 +7,10 @@ import com.softserve.entity.Hotel;
 import com.softserve.entity.Person;
 import com.softserve.entity.Rooms;
 import com.softserve.entity.Visa;
+import com.softserve.service.BookingService;
+import com.softserve.service.BookingServiceImpl;
+import com.softserve.service.HotelService;
+import com.softserve.service.HotelServiceImpl;
 import com.softserve.service.TravelService;
 import com.softserve.service.TravelServiceImp;
 import java.time.LocalDate;
@@ -20,6 +24,7 @@ import org.junit.Test;
 
 import static com.softserve.entity.Rooms.Bedrooms.APARTMENT;
 import static com.softserve.entity.Rooms.Bedrooms.DOUBLE;
+import static com.softserve.entity.Rooms.Bedrooms.SINGLE;
 import static com.softserve.entity.Rooms.Luxury.BUSINESS;
 import static org.junit.Assert.assertEquals;
 
@@ -30,10 +35,14 @@ import static org.junit.Assert.assertEquals;
 public class AppTest {
     private static SessionFactory sessionFactory = null;
     static TravelService travelService;
+    static HotelService hotelService;
+    static BookingService bookingService;
 
     @BeforeClass
     public static void setUp() throws Exception {
         travelService = TravelServiceImp.travelService;
+        hotelService = HotelServiceImpl.hotelService;
+        bookingService = BookingServiceImpl.bookingService;
         sessionFactory = new Configuration().configure().buildSessionFactory();
         Session session = sessionFactory.openSession();
         session.beginTransaction();
@@ -61,14 +70,18 @@ public class AppTest {
         session.beginTransaction();
 
         Country country = new Country("Ukraine");
-        //  Country country2 = new Country( "USA" );
+          Country country2 = new Country( "USA" );
         session.save(country);
-        //  session.save( country2 );
+          session.save( country2 );
 
         session.getTransaction().commit();
         session.close();
         System.out.println("testSaveCountries ends .......");
+        List<Country> findHotels = travelService.findCountry();
 
+//        assertEquals(2, findHotels.size());
+//        assertEquals(country, (findHotels.get(0)));
+//        assertEquals(country2, (findHotels.get(1)));
     }
 
     @Test
@@ -147,8 +160,35 @@ public class AppTest {
         assertEquals(h2, (findHotels.get(0)));
         System.out.println("=====================================================================");
 
-
     }
+
+//    @Test
+//    public void  testAvailableHotel(){
+//        Session session = sessionFactory.openSession();
+//        session.beginTransaction();
+//
+//        Country country = new Country("Ukraine");
+//        session.save(country);
+//        City kyiv = new City("Kyiv");
+//        kyiv.setCountry(country);
+//        session.save(kyiv);
+//        Hotel h1 = new Hotel("Hilton", 4, 4, "hotel");
+//        h1.setCity(kyiv);
+//        session.save(h1);
+//
+//        Rooms r1 = new Rooms(1, BUSINESS, DOUBLE);
+//        r1.setHotel(h1);
+//        session.save(r1);
+//        Rooms r2 = new Rooms(1, BUSINESS, DOUBLE);
+//        r2.setHotel(h1);
+//        session.save(r2);
+//
+//        session.getTransaction().commit();
+//        session.close();
+//        System.out.println("testSaveOperation ends .......");
+//        assertEquals(false, hotelService.availableHotel(h1));
+//
+//    }
 
     @Test
     public void testSaveRooms() {
@@ -165,26 +205,23 @@ public class AppTest {
         session.save(h2);
         Person person = new Person("Lolik", "Zhukin", "FD23111", 30);
         session.save(person);
-        Bookings book = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020,05,16)),
-            java.sql.Date.valueOf(LocalDate.of(2020,06,16)));
-        book.setHotel(h2);
-        //book.getRoom().add(r1);
-        book.setPerson(person);
 
         Rooms r1 = new Rooms(1, BUSINESS, DOUBLE);
         r1.setHotel(h2);
-        r1.setBooking(book);
         session.save(r1);
-        session.save(book);
 
         Rooms r2 = new Rooms(2, BUSINESS, APARTMENT);
         r2.setHotel(h2);
-        r2.setBooking(book);
         session.save(r2);
 
         session.getTransaction().commit();
         session.close();
         System.out.println("testSaveOperation ends .......");
+        Bookings book = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 05, 16)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 16)), 1, BUSINESS,DOUBLE, lviv);
+        List<Rooms>roomsForBook =  bookingService.roomsByCriteria(book);
+        assertEquals(1, roomsForBook.size());
+        assertEquals(r1, roomsForBook.get(0));
 
     }
 
@@ -249,19 +286,28 @@ public class AppTest {
         session.save(person);
         Rooms r1 = new Rooms(1, BUSINESS, DOUBLE);
         r1.setHotel(h2);
-
-
-        Bookings book = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 05, 16)),
-            java.sql.Date.valueOf(LocalDate.of(2020, 06, 16)));
-        book.setHotel(h2);
-        //book.getRoom().add(r1);
-        book.setPerson(person);
-        r1.setBooking(book);
         session.save(r1);
-        session.save(book);
 
+        Bookings book1 =new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 05, 16)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 16)), 1, BUSINESS,SINGLE, lviv);
+        book1.setPerson(person);
+        book1.setHotel(h2);
+        book1.setRoom(book1.getAddRoom(r1));
+        session.save(book1);
+        Bookings book2 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, lviv);
+        book2.setPerson(person);
+        book2.setHotel(h2);
+        book2.setRoom(book2.getAddRoom(r1));
+        session.save(book2);
         session.getTransaction().commit();
         session.close();
+
+//        Bookings book = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 17)),
+//            java.sql.Date.valueOf(LocalDate.of(2020, 06, 19)), 1, BUSINESS,SINGLE, lviv);
+//       List<Rooms>roomsForBook =  bookingService.roomsByCriteria(book);
+//       assertEquals(1, roomsForBook.size());
+//       assertEquals(r1, roomsForBook.get(0));
     }
 
 

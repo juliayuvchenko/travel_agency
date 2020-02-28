@@ -51,23 +51,26 @@ public static TravelService travelService = new TravelServiceImp();
     }
 
     @Override
-    public boolean findHotelByDate(Hotel hotel, java.sql.Date  date) {
-        return false;
+    public boolean findHotelByDate(Hotel hotel, LocalDate  date) {
+        try (Session session = sessionFactory.openSession()){
+            String sql = "select * from bookings where issue=:issue and expiration=";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Visa.class);
+            query.setParameter("id", hotel.getId());
+             query.list();
+        }
+        catch (Exception e){
+            System.out.println("Failed amountOfVisaPerson" + hotel);
+            throw e;
+        }
+
+
+return true;
     }
 
     @Override
-    public List<Hotel> findAvailableHotel(City city, java.sql.Date date) {
-        try (Session session = sessionFactory.openSession()){
-            String sql = "select * from hotel where id_city=:id";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Visa.class);
-            query.setParameter("id", city.getId());
-            return query.list();
-        }
-        catch (Exception e){
-            System.out.println("Failed findAvailableHotel" );
-            throw e;
-        }
+    public List<Hotel> findAvailableHotel(City city, LocalDate date) {
+        return null;
     }
 
     @Override

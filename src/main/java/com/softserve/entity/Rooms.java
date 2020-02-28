@@ -1,14 +1,18 @@
 package com.softserve.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -37,10 +41,18 @@ public class Rooms {
     @JoinColumn(name = "id_hotel")
     private Hotel hotel;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rooms")
-    private Bookings booking = new Bookings();
+    public Bookings getBookings() {
+        return bookings;
+    }
 
+    public void setBookings(Bookings bookings) {
+        this.bookings = bookings;
+    }
+
+    @ManyToOne
+    @JoinTable(name = "bookings_rooms", joinColumns = @JoinColumn(name = "room_id"),
+        inverseJoinColumns = @JoinColumn(name="bookings_id"))
+    private Bookings bookings;
 
     public enum Luxury {
         ECONOM, STANDARD, BUSINESS, PREMIUM
@@ -48,14 +60,6 @@ public class Rooms {
 
     public enum Bedrooms {
         SINGLE, DOUBLE, TRIPLE, APARTMENT
-    }
-
-    public Bookings getBooking() {
-        return booking;
-    }
-
-    public void setBooking(Bookings booking) {
-        this.booking = booking;
     }
 
     public long getId() {
@@ -111,12 +115,13 @@ public class Rooms {
             getRoom_number() == rooms.getRoom_number() &&
             getLuxury() == rooms.getLuxury() &&
             getBedrooms() == rooms.getBedrooms() &&
-            Objects.equals(getHotel(), rooms.getHotel()) &&
-            Objects.equals(getBooking(), rooms.getBooking());
+            Objects.equals(getHotel(), rooms.getHotel()); //&&
+        //Objects.equals(getBooking(), rooms.getBooking());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel(), getBooking());
+        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel());
     }
+
 }
