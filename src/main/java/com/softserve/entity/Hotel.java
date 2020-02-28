@@ -1,7 +1,9 @@
 package com.softserve.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,7 +15,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "hotels")
-public class Hotel{
+public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
@@ -37,7 +39,7 @@ public class Hotel{
     }
 
     @ManyToOne
-    @JoinColumn(name ="id_city")
+    @JoinColumn(name = "id_city")
     private City city;
 
 
@@ -92,6 +94,19 @@ public class Hotel{
                 Objects.equals(getName(), hotel.getName()) &&
                 Objects.equals(getProperty_type(), hotel.getProperty_type()) &&
                 Objects.equals(getCity(), hotel.getCity());
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Hotel)) {
+            return false;
+        }
+        Hotel hotel = (Hotel) o;
+        return getId() == hotel.getId() &&
+            getStar_rating() == hotel.getStar_rating() &&
+            distance_from_center == hotel.distance_from_center &&
+            Objects.equals(getName(), hotel.getName()) &&
+            Objects.equals(getProperty_type(), hotel.getProperty_type()) &&
+            Objects.equals(getCity(), hotel.getCity());
     }
 
     @Override

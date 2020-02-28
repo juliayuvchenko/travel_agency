@@ -1,15 +1,16 @@
 package com.softserve.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.CascadeType;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,7 +19,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
@@ -52,6 +52,17 @@ public class Person implements Serializable {
         visas = new ArrayList<>();
     }
 
+    @OneToMany(mappedBy = "person")
+    //@JoinTable(name = "person",  joinColumns = @JoinColumn( name = "visa_id" ))
+    private Collection<Visa> visa = new ArrayList<Visa>();
+
+    public Collection<Visa> getVisa() {
+        return visa;
+    }
+
+    public void setVisa(Collection<Visa> visa) {
+        this.visa = visa;
+    }
 
     public long getId() {
         return id;
@@ -112,10 +123,26 @@ public class Person implements Serializable {
                 Objects.equals(getLastName(), person.getLastName()) &&
                 Objects.equals(getPassport(), person.getPassport()) &&
                 Objects.equals(getVisas(), person.getVisas());
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Person)) {
+            return false;
+        }
+        Person person = (Person) o;
+        return getId() == person.getId() &&
+            getAge() == person.getAge() &&
+            Objects.equals(getFirstName(), person.getFirstName()) &&
+            Objects.equals(getLastName(), person.getLastName()) &&
+            Objects.equals(getPassport(), person.getPassport()) &&
+            Objects.equals(getVisa(), person.getVisa());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisas());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisa());
     }
 }

@@ -1,6 +1,8 @@
 package com.softserve.entity;
 
+import java.util.Objects;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -25,7 +27,7 @@ public class City {
     }
 
     @ManyToOne
-    @JoinColumn(name ="id_country")
+    @JoinColumn(name = "id_country")
     private Country country;
 
     public long getId() {
@@ -60,6 +62,16 @@ public class City {
         return getId() == city1.getId() &&
                 Objects.equals(getCity(), city1.getCity()) &&
                 Objects.equals(getCountry(), city1.getCountry());
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof City)) {
+            return false;
+        }
+        City city1 = (City) o;
+        return getId() == city1.getId() &&
+            Objects.equals(getCity(), city1.getCity()) &&
+            Objects.equals(getCountry(), city1.getCountry());
     }
 
     @Override

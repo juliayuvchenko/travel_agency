@@ -2,6 +2,9 @@ package com.softserve.entity;
 
 import java.util.Objects;
 import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-
 @Table(name = "countries")
 public class Country {
     @Id
@@ -38,12 +40,18 @@ public class Country {
     public Country() {
     }
 
-    public Country( String country) {
+    public Country(String country) {
         this.country = country;
     }
 
     public Set<Person> getGuests() {
         return guests;
+
+    @OneToMany(mappedBy = "country")
+    private Collection<Visa> visa = new ArrayList<Visa>();
+
+    public Collection<Visa> getVisa() {
+        return visa;
     }
 
     public void setGuests(Set<Person> guests) {
@@ -74,11 +82,22 @@ public class Country {
         return getId() == country1.getId() &&
                 Objects.equals(getCountry(), country1.getCountry()); //&&
 //                Objects.equals(getVisa(), country1.getVisa());
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Country)) {
+            return false;
+        }
+        Country country1 = (Country) o;
+        return getId() == country1.getId() &&
+            Objects.equals(getCountry(), country1.getCountry());//&&
+         //Objects.equals(getVisa(), country1.getVisa());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getCountry());
+        return Objects.hash(getId(), getCountry(), getVisa());
     }
 }
 
