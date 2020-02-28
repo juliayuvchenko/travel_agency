@@ -7,24 +7,20 @@ import com.softserve.entity.Hotel;
 import com.softserve.entity.Person;
 import com.softserve.entity.Rooms;
 import com.softserve.entity.Visa;
-import com.softserve.services.TravelServiceImp;
-import com.softserve.services.interfaces.TravelService;
+import com.softserve.dao.TravelServiceImp;
+import com.softserve.dao.interfaces.TravelService;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.softserve.entity.Rooms.Bedrooms.APARTMENT;
 import static com.softserve.entity.Rooms.Bedrooms.DOUBLE;
 import static com.softserve.entity.Rooms.Luxury.BUSINESS;
-import static com.softserve.services.TravelServiceImp.travelService;
 import static junit.framework.TestCase.assertEquals;
 
 

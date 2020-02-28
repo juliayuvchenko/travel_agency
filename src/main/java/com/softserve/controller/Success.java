@@ -10,6 +10,6 @@ import java.io.PrintWriter;
 public class Success extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         PrintWriter writer = response.getWriter();
-        writer.println("" + "" + "<center>" + "Details Added Successfully" + "<center>" + "" + "");
+        writer.println("Details Added Successfully");
     }
 }

@@ -1,17 +1,20 @@
 package com.softserve.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
+
 @Table(name = "countries")
 public class Country {
     @Id
@@ -19,6 +22,19 @@ public class Country {
     private long id;
     @Column
     private String country;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_person")
+    private Set<Person> guests;
+
+    /*@OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_visa")
+    private Set<Visa> visas;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_visa")
+    private Set<City> cities;*/
+
     public Country() {
     }
 
@@ -26,15 +42,12 @@ public class Country {
         this.country = country;
     }
 
-    @OneToMany( mappedBy = "country")
-    private Collection<Visa> visa = new ArrayList<Visa>();
-
-    public Collection<Visa> getVisa() {
-        return visa;
+    public Set<Person> getGuests() {
+        return guests;
     }
 
-    public void setVisa(Collection<Visa> visa) {
-        this.visa = visa;
+    public void setGuests(Set<Person> guests) {
+        this.guests = guests;
     }
 
     public long getId() {
@@ -65,7 +78,7 @@ public class Country {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCountry(), getVisa());
+        return Objects.hash(getId(), getCountry());
     }
 }
 

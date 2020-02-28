@@ -35,8 +35,9 @@ public class Person implements Serializable {
     private int age;
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JoinTable(name = "person",  joinColumns = @JoinColumn( name = "visa_id" ))
-    private Set<Visa> visas;
+    private List<Visa> visas;
+    private List<Country> visitedCountries;
+//    private Set<Bookings> bookings;
 
 
 
@@ -48,16 +49,7 @@ public class Person implements Serializable {
         this.lastName = lastName;
         this.passport = passport;
         this.age = age;
-        visas = new HashSet<>();
-    }
-
-    public void addVisa(Visa visa) {
-        visa.setPerson(this);
-        visas.add(visa);
-    }
-
-    public void removeAuto(Visa visa) {
-        visas.remove(visa);
+        visas = new ArrayList<>();
     }
 
 
@@ -101,11 +93,11 @@ public class Person implements Serializable {
         this.age = age;
     }
 
-    public Set<Visa> getVisas() {
+    public List<Visa> getVisas() {
         return visas;
     }
 
-    public void setVisas(Set<Visa> visas) {
+    public void setVisas(List<Visa> visas) {
         this.visas = visas;
     }
 

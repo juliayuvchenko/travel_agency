@@ -30,6 +30,7 @@ public class Visa{
     @JoinColumn( name = "id_country")
     private Country country;
 
+
     public Visa() {
     }
 
