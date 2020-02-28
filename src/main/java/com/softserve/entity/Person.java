@@ -3,6 +3,7 @@ package com.softserve.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
@@ -28,7 +34,14 @@ public class Person implements Serializable {
     @Column
     private int age;
 
-    public Person(){
+    @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Visa> visas;
+    private List<Country> visitedCountries;
+//    private Set<Bookings> bookings;
+
+
+
+    public Person() {
     }
 
     public Person(String firstName, String lastName, String passport, int age) {
@@ -36,7 +49,7 @@ public class Person implements Serializable {
         this.lastName = lastName;
         this.passport = passport;
         this.age = age;
-
+        visas = new ArrayList<>();
     }
 
     @OneToMany(mappedBy = "person")
@@ -91,6 +104,25 @@ public class Person implements Serializable {
         this.age = age;
     }
 
+    public List<Visa> getVisas() {
+        return visas;
+    }
+
+    public void setVisas(List<Visa> visas) {
+        this.visas = visas;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Person)) return false;
+        Person person = (Person) o;
+        return getId() == person.getId() &&
+                getAge() == person.getAge() &&
+                Objects.equals(getFirstName(), person.getFirstName()) &&
+                Objects.equals(getLastName(), person.getLastName()) &&
+                Objects.equals(getPassport(), person.getPassport()) &&
+                Objects.equals(getVisas(), person.getVisas());
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -110,6 +142,7 @@ public class Person implements Serializable {
 
     @Override
     public int hashCode() {
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisas());
         return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisa());
     }
 }

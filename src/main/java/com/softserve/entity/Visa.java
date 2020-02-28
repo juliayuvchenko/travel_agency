@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Table(name = "visa")
 @Entity
@@ -21,9 +22,18 @@ public class Visa {
     @Column
     private java.sql.Date expiration;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn (name = "id_person")
+    private Person person;
+
+    @ManyToOne
+    @JoinColumn( name = "id_country")
+    private Country country;
+
     public Visa() {
     }
 
+    public Visa( java.sql.Date issue, java.sql.Date expiration) {
     public Visa(java.sql.Date issue, java.sql.Date expiration) {
         this.issue = issue;
         this.expiration = expiration;
@@ -36,7 +46,6 @@ public class Visa {
     public void setPerson(Person person) {
         this.person = person;
     }
-
     @ManyToOne
     @JoinColumn(name = "id_person")
     private Person person;
@@ -77,6 +86,15 @@ public class Visa {
         this.expiration = expiration;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Visa)) return false;
+        Visa visa = (Visa) o;
+        return getId() == visa.getId() &&
+                Objects.equals(getIssue(), visa.getIssue()) &&
+                Objects.equals(getExpiration(), visa.getExpiration()) &&
+                Objects.equals(getPerson(), visa.getPerson());
     //    public String getIssue() {
 //        return issue;
 //    }
@@ -111,6 +129,9 @@ public class Visa {
 
     @Override
     public int hashCode() {
+
+        return Objects.hash(getId(), getIssue(), getExpiration(), getPerson());
+
         return Objects.hash(getId(), getIssue(), getExpiration(), getPerson(), getCountry());
     }
 
@@ -123,5 +144,6 @@ public class Visa {
             ", person=" + person +
             ", country=" + country +
             '}';
+
     }
 }

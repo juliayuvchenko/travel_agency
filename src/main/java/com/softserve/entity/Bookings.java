@@ -34,10 +34,11 @@ public class Bookings {
     @Column
     private Rooms.Bedrooms bedrooms;
 
-
     public Bookings() {
 
     }
+    public Bookings(java.sql.Date checkin, java.sql.Date checkout) {
+        this.checkin = checkin;
 
     public Bookings(java.sql.Date checkin, java.sql.Date checkout, int quantity, Rooms.Luxury luxury,
                     Rooms.Bedrooms bedrooms, City city) {
@@ -76,6 +77,9 @@ public class Bookings {
         return checkin;
     }
 
+
+    public Collection<Rooms> getRoom() {
+        return room;
     public void setCheckin(Date checkin) {
         this.checkin = checkin;
     }
@@ -84,6 +88,28 @@ public class Bookings {
         return checkout.toLocalDate();
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public java.sql.Date getCheckin() {
+        return checkin;
+    }
+
+    public void setCheckin(java.sql.Date checkin) {
+        this.checkin = checkin;
+    }
+
+    public java.sql.Date getCheckout() {
+        return checkout;
+    }
+
+    public void setCheckout(java.sql.Date checkout) {
+        this.checkout = checkout;
     public void setCheckout(Date checkout) {
         this.checkout = checkout;
     }
@@ -132,7 +158,6 @@ public class Bookings {
     public void setCity(City city) {
         this.city = city;
     }
-
     public Hotel getHotel() {
         return hotel;
     }
@@ -151,6 +176,15 @@ public class Bookings {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bookings)) return false;
+        Bookings bookings = (Bookings) o;
+        return getId() == bookings.getId() &&
+                Objects.equals(getCheckin(), bookings.getCheckin()) &&
+                Objects.equals(getCheckout(), bookings.getCheckout()) &&
+                Objects.equals(getRoom(), bookings.getRoom()) &&
+                Objects.equals(getHotel(), bookings.getHotel()) &&
+                Objects.equals(getPerson(), bookings.getPerson());
         if (this == o) {
             return true;
         }
@@ -172,6 +206,7 @@ public class Bookings {
 
     @Override
     public int hashCode() {
+        return Objects.hash(getId(), getCheckin(), getCheckout(), getRoom(), getHotel(), getPerson());
         return Objects.hash(getId(), getCheckin(), getCheckout(), getQuantity(), getLuxury(), getBedrooms(), getRoom(), getCity(), getHotel(), getPerson());
     }
 }

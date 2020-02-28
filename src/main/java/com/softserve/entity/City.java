@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "cities")
@@ -55,6 +56,12 @@ public class City {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof City)) return false;
+        City city1 = (City) o;
+        return getId() == city1.getId() &&
+                Objects.equals(getCity(), city1.getCity()) &&
+                Objects.equals(getCountry(), city1.getCountry());
         if (this == o) {
             return true;
         }

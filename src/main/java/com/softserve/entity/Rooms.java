@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rooms")
@@ -69,6 +70,13 @@ public class Rooms {
     public void setId(long id) {
         this.id = id;
     }
+   public long getId() {
+      return id;
+   }
+
+   public void setId(long id) {
+      this.id = id;
+   }
 
     public int getRoom_number() {
         return room_number;
@@ -123,5 +131,25 @@ public class Rooms {
     public int hashCode() {
         return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel());
     }
+   public void setHotel(Hotel hotel) {
+      this.hotel = hotel;
+   }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rooms)) return false;
+        Rooms rooms = (Rooms) o;
+        return getId() == rooms.getId() &&
+                getRoom_number() == rooms.getRoom_number() &&
+                getLuxury() == rooms.getLuxury() &&
+                getBedrooms() == rooms.getBedrooms() &&
+                Objects.equals(getHotel(), rooms.getHotel()) &&
+                Objects.equals(getBooking(), rooms.getBooking());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel(), getBooking());
+    }
 }

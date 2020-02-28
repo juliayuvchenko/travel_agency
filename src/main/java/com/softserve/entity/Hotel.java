@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.util.Objects;
 
 
 @Entity
@@ -84,6 +85,15 @@ public class Hotel {
 
     @Override
     public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Hotel)) return false;
+        Hotel hotel = (Hotel) o;
+        return getId() == hotel.getId() &&
+                getStar_rating() == hotel.getStar_rating() &&
+                distance_from_center == hotel.distance_from_center &&
+                Objects.equals(getName(), hotel.getName()) &&
+                Objects.equals(getProperty_type(), hotel.getProperty_type()) &&
+                Objects.equals(getCity(), hotel.getCity());
         if (this == o) {
             return true;
         }
@@ -103,5 +113,4 @@ public class Hotel {
     public int hashCode() {
         return Objects.hash(getId(), getName(), getStar_rating(), distance_from_center, getProperty_type(), getCity());
     }
-
 }
