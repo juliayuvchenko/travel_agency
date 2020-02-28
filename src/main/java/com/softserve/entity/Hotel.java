@@ -1,7 +1,9 @@
 package com.softserve.entity;
 
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,10 +14,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "hotels")
-public class Hotel{
+public class Hotel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private String name;
     @Column
@@ -36,15 +38,15 @@ public class Hotel{
     }
 
     @ManyToOne
-    @JoinColumn(name ="id_city")
+    @JoinColumn(name = "id_city")
     private City city;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -79,4 +81,27 @@ public class Hotel{
     public void setCity(City city) {
         this.city = city;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Hotel)) {
+            return false;
+        }
+        Hotel hotel = (Hotel) o;
+        return getId() == hotel.getId() &&
+            getStar_rating() == hotel.getStar_rating() &&
+            distance_from_center == hotel.distance_from_center &&
+            Objects.equals(getName(), hotel.getName()) &&
+            Objects.equals(getProperty_type(), hotel.getProperty_type()) &&
+            Objects.equals(getCity(), hotel.getCity());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getStar_rating(), distance_from_center, getProperty_type(), getCity());
+    }
+
 }

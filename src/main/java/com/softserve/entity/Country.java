@@ -2,6 +2,7 @@ package com.softserve.entity;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,30 +10,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-//import lombok.AllArgsConstructor;
-//import lombok.Data;
-//import lombok.NoArgsConstructor;
 
 @Entity
-//@Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 @Table(name = "countries")
 public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     @Column
     private String country;
 
     public Country() {
     }
 
-    public Country( String country) {
+    public Country(String country) {
         this.country = country;
     }
 
-     @OneToMany( mappedBy = "country")
+    @OneToMany(mappedBy = "country")
     private Collection<Visa> visa = new ArrayList<Visa>();
 
     public Collection<Visa> getVisa() {
@@ -43,11 +38,11 @@ public class Country {
         this.visa = visa;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -59,6 +54,23 @@ public class Country {
         this.country = country;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Country)) {
+            return false;
+        }
+        Country country1 = (Country) o;
+        return getId() == country1.getId() &&
+            Objects.equals(getCountry(), country1.getCountry());//&&
+         //Objects.equals(getVisa(), country1.getVisa());
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getCountry(), getVisa());
+    }
 }
 
