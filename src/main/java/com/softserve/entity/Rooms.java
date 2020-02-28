@@ -52,7 +52,7 @@ public class Rooms {
 
     @ManyToOne
     @JoinTable(name = "bookings_rooms", joinColumns = @JoinColumn(name = "room_id"),
-        inverseJoinColumns = @JoinColumn(name="bookings_id"))
+        inverseJoinColumns = @JoinColumn(name = "bookings_id"))
     private Bookings bookings;
 
     public enum Luxury {
@@ -70,13 +70,6 @@ public class Rooms {
     public void setId(long id) {
         this.id = id;
     }
-   public long getId() {
-      return id;
-   }
-
-   public void setId(long id) {
-      this.id = id;
-   }
 
     public int getRoom_number() {
         return room_number;
@@ -123,33 +116,12 @@ public class Rooms {
             getRoom_number() == rooms.getRoom_number() &&
             getLuxury() == rooms.getLuxury() &&
             getBedrooms() == rooms.getBedrooms() &&
-            Objects.equals(getHotel(), rooms.getHotel()); //&&
-        //Objects.equals(getBooking(), rooms.getBooking());
+            Objects.equals(getHotel(), rooms.getHotel()) &&
+            Objects.equals(getBookings(), rooms.getBookings());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel());
-    }
-   public void setHotel(Hotel hotel) {
-      this.hotel = hotel;
-   }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Rooms)) return false;
-        Rooms rooms = (Rooms) o;
-        return getId() == rooms.getId() &&
-                getRoom_number() == rooms.getRoom_number() &&
-                getLuxury() == rooms.getLuxury() &&
-                getBedrooms() == rooms.getBedrooms() &&
-                Objects.equals(getHotel(), rooms.getHotel()) &&
-                Objects.equals(getBooking(), rooms.getBooking());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel(), getBooking());
+        return Objects.hash(getId(), getRoom_number(), getLuxury(), getBedrooms(), getHotel(), getBookings());
     }
 }

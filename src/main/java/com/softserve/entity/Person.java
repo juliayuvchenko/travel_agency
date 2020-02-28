@@ -3,22 +3,16 @@ package com.softserve.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.CascadeType;
+import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
 @Entity
 @Table(name = "person")
 public class Person implements Serializable {
@@ -36,9 +30,8 @@ public class Person implements Serializable {
 
     @OneToMany(mappedBy = "person", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Visa> visas;
-    private List<Country> visitedCountries;
+    //private List<Country> visitedCountries;
 //    private Set<Bookings> bookings;
-
 
 
     public Person() {
@@ -118,31 +111,15 @@ public class Person implements Serializable {
         if (!(o instanceof Person)) return false;
         Person person = (Person) o;
         return getId() == person.getId() &&
-                getAge() == person.getAge() &&
-                Objects.equals(getFirstName(), person.getFirstName()) &&
-                Objects.equals(getLastName(), person.getLastName()) &&
-                Objects.equals(getPassport(), person.getPassport()) &&
-                Objects.equals(getVisas(), person.getVisas());
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Person)) {
-            return false;
-        }
-        Person person = (Person) o;
-        return getId() == person.getId() &&
             getAge() == person.getAge() &&
             Objects.equals(getFirstName(), person.getFirstName()) &&
             Objects.equals(getLastName(), person.getLastName()) &&
             Objects.equals(getPassport(), person.getPassport()) &&
-            Objects.equals(getVisa(), person.getVisa());
+            Objects.equals(getVisas(), person.getVisas());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisas());
-        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisa());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getPassport(), getAge(), getVisas(), getVisa());
     }
 }
