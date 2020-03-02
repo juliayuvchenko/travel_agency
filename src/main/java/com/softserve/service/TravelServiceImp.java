@@ -1,5 +1,6 @@
 package com.softserve.service;
 
+import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
@@ -51,16 +52,16 @@ public static TravelService travelService = new TravelServiceImp();
     }
 
     @Override
-    public boolean findHotelByDate(Hotel hotel, LocalDate  date) {
+    public boolean findHotelByDate(Bookings bookings) {
         try (Session session = sessionFactory.openSession()){
             String sql = "select * from bookings where issue=:issue and expiration=";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Visa.class);
-            query.setParameter("id", hotel.getId());
+            query.setParameter("id", bookings.getHotel().getId());
              query.list();
         }
         catch (Exception e){
-            System.out.println("Failed amountOfVisaPerson" + hotel);
+            System.out.println("Failed amountOfVisaPerson" + bookings.getHotel());
             throw e;
         }
 
@@ -69,10 +70,21 @@ return true;
     }
 
     @Override
-    public List<Hotel> findAvailableHotel(City city, LocalDate date) {
-        return null;
+    public List<Hotel> findAvailableHotel(Bookings bookings) {
+        try (Session session = sessionFactory.openSession()) {
+            String sql = "select * from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id) " +
+                "join rooms on rooms.id=bookings_rooms.room_id) " +
+                "join hotels on rooms.id_hotel=hotels.id) where hotels.id_city=:id";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Bookings.class);
+            query.setParameter("id", bookings.getCity().getId());
+            List<Bookings> bookingsList =  query.list();
+            return Bookings.whichHotelPossibleToBook(bookingsList, bookings);
+        } catch (Exception e) {
+            System.out.println("Failed findAvailableHotel");
+            throw e;
+        }
     }
-
     @Override
     public List<Visa> amountOfVisaPerson(Person person) {
         try (Session session = sessionFactory.openSession()){

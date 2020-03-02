@@ -1,5 +1,6 @@
 package com.softserve.service;
 
+import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
@@ -14,9 +15,9 @@ public interface TravelService {
 
     List<Hotel> findHotelByCity(City city);
 
-    boolean findHotelByDate(Hotel hotel,LocalDate date);
+    boolean findHotelByDate(Bookings bookings);
 
-    List<Hotel> findAvailableHotel(City city, LocalDate date);
+    List<Hotel> findAvailableHotel(Bookings booking);
 
     List<Visa> amountOfVisaPerson(Person person);
 
