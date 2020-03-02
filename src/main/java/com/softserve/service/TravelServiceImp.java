@@ -52,8 +52,10 @@ public class TravelServiceImp implements TravelService {
         try (Session session = sessionFactory.openSession()) {
             String sql = "select * from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id) " +
                 "join rooms on rooms.id=bookings_rooms.room_id) " +
-                "join hotels on rooms.id_hotel=hotels.id)";
+                "join hotels on rooms.id_hotel=hotels.id) where hotels.id=:id";
             SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Bookings.class);
+            query.setParameter("id", bookings.getHotel().getId());
             List<Bookings> bookingsList = query.list();
             return Bookings.ifPossibleToBook(bookingsList, bookings);
         } catch (Exception e) {
@@ -96,7 +98,7 @@ public class TravelServiceImp implements TravelService {
     @Override
     public List<Visa> amountOfVisaCountry(String country) {
         try (Session session = sessionFactory.openSession()) {
-            String sql = "select * from visa join countries where country=:country";
+            String sql = " select * from visa left join countries on visa.id_country= countries.id where country=:country";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Visa.class);
             query.setParameter("country", country);

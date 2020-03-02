@@ -23,12 +23,12 @@ public class Country {
     @Column
     private String country;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_person")
-    private Set<Person> guests;
+//    @OneToMany
+//    @JoinColumn(name = "id_person")
+//    private Set<Person> guests;
 
     /*@OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_visa")
+    @JoinColumn(name = "id_visafetch = FetchType.LAZY)")
     private Set<Visa> visas;
 
     @OneToMany(fetch = FetchType.LAZY)
@@ -42,9 +42,9 @@ public class Country {
         this.country = country;
     }
 
-    public Set<Person> getGuests() {
-        return guests;
-    }
+//    public Set<Person> getGuests() {
+//        return guests;
+//    }
     @OneToMany(mappedBy = "country")
     private Collection<Visa> visa = new ArrayList<Visa>();
 
@@ -68,9 +68,9 @@ public class Country {
         this.country = country;
     }
 
-    public void setGuests(Set<Person> guests) {
-        this.guests = guests;
-    }
+//    public void setGuests(Set<Person> guests) {
+//        this.guests = guests;
+//    }
 
     public void setVisa(Collection<Visa> visa) {
         this.visa = visa;
@@ -86,14 +86,14 @@ public class Country {
         }
         Country country1 = (Country) o;
         return getId() == country1.getId() &&
-            Objects.equals(getCountry(), country1.getCountry()) &&
-            Objects.equals(getGuests(), country1.getGuests()) &&
-            Objects.equals(getVisa(), country1.getVisa());
+            Objects.equals(getCountry(), country1.getCountry());// &&
+         //   Objects.equals(getGuests(), country1.getGuests()) ; //&&
+           // Objects.equals(getVisa(), country1.getVisa());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCountry(), getGuests(), getVisa());
+        return Objects.hash(getId(), getCountry());
     }
 }
 
