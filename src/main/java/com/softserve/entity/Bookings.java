@@ -45,7 +45,7 @@ public class Bookings {
     }
 
     @OneToMany
-    private Collection<Rooms> room = new ArrayList<Rooms>();
+    private Collection<Rooms> room = new ArrayList<>();
 
     @OneToOne
     @JoinColumn(name = "id_city")
@@ -162,6 +162,7 @@ public class Bookings {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCheckin(), getCheckout(), getQuantity(), getLuxury(), getBedrooms(), getRoom(), getCity(), getHotel(), getPerson());
+        return Objects.hash(getId(), getCheckin(), getCheckout(), getQuantity(), getLuxury(), getBedrooms(), getRoom(),
+                getCity(), getHotel(), getPerson());
     }
 }

@@ -45,6 +45,7 @@ public class Country {
     public Set<Person> getGuests() {
         return guests;
     }
+
     @OneToMany(mappedBy = "country")
     private Collection<Visa> visa = new ArrayList<Visa>();
 

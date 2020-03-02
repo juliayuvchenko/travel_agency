@@ -22,7 +22,7 @@ public static TravelService travelService = new TravelServiceImp();
     }
 
     @Override
-    public List<Country> findCountry() {
+    public List<Country> getAllCountries() {
         try(Session session = sessionFactory.openSession()){
             String sql = "select * from countries";
             SQLQuery query = session.createSQLQuery(sql);
@@ -45,7 +45,7 @@ public static TravelService travelService = new TravelServiceImp();
           return query.list();
         }
         catch (Exception e){
-            System.out.println("Failed findHotelByCity" + city);
+            System.out.println("Failed findHotelByCity" + city.getId());
             throw e;
         }
     }
@@ -90,17 +90,18 @@ return true;
 
     @Override
     public int amountOfVisaCountry(Country country) {
-        try (Session session = sessionFactory.openSession()){
-            String sql = "select * from visa where id_country=:id";
-            SQLQuery query = session.createSQLQuery(sql);
-            query.addEntity(Visa.class);
-            query.setParameter("id", country.getId());
-            return query.list().size();
-        }
-        catch (Exception e){
-            System.out.println("Failed amountOfVisaPerson" + country);
-            throw e;
-        }
+//        try (Session session = sessionFactory.openSession()){
+//            String sql = "select * from visa where id_country=:id";
+//            SQLQuery query = session.createSQLQuery(sql);
+//            query.addEntity(Visa.class);
+//            query.setParameter("id", country.getId());
+//            return query.list().size();
+//        }
+//        catch (Exception e){
+//            System.out.println("Failed amountOfVisaPerson" + country);
+//            throw e;
+//        }
+        return 1;
     }
 
     @Override

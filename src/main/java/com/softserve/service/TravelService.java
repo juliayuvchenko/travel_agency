@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface TravelService {
 
-    List<Country> findCountry();
+    List<Country> getAllCountries();
 
     List<Hotel> findHotelByCity(City city);
 
