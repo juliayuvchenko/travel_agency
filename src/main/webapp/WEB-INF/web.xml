@@ -9,23 +9,13 @@
     http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
   <display-name>Web Application</display-name>
   <servlet>
-    <display-name>Person</display-name>
-    <servlet-name>PersonControllerServlet</servlet-name>
-    <servlet-class>com.softserve.controller.PersonControllerServlet</servlet-class>
+    <servlet-name>Servlet</servlet-name>
+    <servlet-class>com.softserve.Servlet</servlet-class>
   </servlet>
-  <servlet>
-    <display-name>Success</display-name>
-    <servlet-name>Success</servlet-name>
-    <servlet-class>com.softserve.controller.Success</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>PersonControllerServlet</servlet-name>
-    <url-pattern>/PersonControllerServlet</url-pattern>
-  </servlet-mapping>
 
   <servlet-mapping>
-    <servlet-name>Success</servlet-name>
-    <url-pattern>/Success</url-pattern>
+    <servlet-name>Servlet</servlet-name>
+    <url-pattern>/reg</url-pattern>
   </servlet-mapping>
   <welcome-file-list>
           <welcome-file>registration.jsp</welcome-file>

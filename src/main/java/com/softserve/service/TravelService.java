@@ -12,17 +12,18 @@ public interface TravelService {
 
     List<Country> findCountry();
 
-    List<Hotel> findHotelByCity(City city);
+    List<Hotel> findHotelByCity(String city);
 
     boolean findHotelByDate(Bookings bookings);
 
     List<Hotel> findAvailableHotel(Bookings booking);
 
-    List<Visa> amountOfVisaPerson(Person person);
+    List<Visa> amountOfVisaPerson(String firstName, String lastName);
 
     List<Visa> amountOfVisaCountry(String country);
 
     boolean bookHotelForPerson(Bookings bookings);
 
 
+    List<City> findCity(String city);
 }

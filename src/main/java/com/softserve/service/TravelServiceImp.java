@@ -34,12 +34,12 @@ public class TravelServiceImp implements TravelService {
     }
 
     @Override
-    public List<Hotel> findHotelByCity(City city) {
+    public List<Hotel> findHotelByCity(String city) {
         try (Session session = sessionFactory.openSession()) {
-            String sql = "select * from hotels where id_city=:id";
+            String sql = "select * from hotels inner join cities on hotels.id_city=cities.id where city=:id";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Hotel.class);
-            query.setParameter("id", city.getId());
+            query.setParameter("id", city);
             return query.list();
         } catch (Exception e) {
             System.out.println("Failed findHotelByCity" + city);
@@ -82,15 +82,17 @@ public class TravelServiceImp implements TravelService {
     }
 
     @Override
-    public List<Visa> amountOfVisaPerson(Person person) {
+    public List<Visa> amountOfVisaPerson(String firstName, String lastName) {
         try (Session session = sessionFactory.openSession()) {
-            String sql = "select * from visa where id_person=:id";
+            String sql = "select * from visa join person on visa.id_person=person.id where firstName=:firstName " +
+                "and lastName=:lastName";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Visa.class);
-            query.setParameter("id", person.getId());
+            query.setParameter("firstName", firstName );
+            query.setParameter("lastName", lastName );
             return query.list();
         } catch (Exception e) {
-            System.out.println("Failed amountOfVisaPerson" + person);
+            System.out.println("Failed amountOfVisaPerson" );
             throw e;
         }
     }
@@ -125,4 +127,18 @@ public class TravelServiceImp implements TravelService {
             throw e;
         }
     }
+@Override
+    public List<City> findCity(String city) {
+        try (Session session = sessionFactory.openSession()) {
+            String sql = "select * from cities where city =:city";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(City.class);
+            query.setParameter("city",city);
+            return query.list();
+        } catch (Exception e) {
+            System.out.println("Failed findCountry");
+            throw e;
+        }
+    }
+
 }

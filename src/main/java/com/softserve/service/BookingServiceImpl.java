@@ -24,8 +24,9 @@ public class BookingServiceImpl implements BookingService {
     public List<Rooms> roomsByCriteria(Bookings bookings) {
         try (Session session = sessionFactory.openSession()){
             String sql = "select rooms.id,rooms.bedrooms, rooms.luxury, rooms.room_number, rooms.id_hotel " +
-                "from ((rooms inner join hotels on rooms.id_hotel = hotels.id) left join bookings on rooms.id = id_rooms)  " +
-                "where rooms.luxury=:luxury and rooms.bedrooms=:bedrooms and hotels.id_city=:id_city";
+                "from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id)" +
+                "join rooms on rooms.id=bookings_rooms.room_id)" +
+                "join hotels on rooms.id_hotel=hotels.id) where rooms.luxury=:luxury and rooms.bedrooms=:bedrooms and hotels.id_city=:id_city";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Rooms.class);
             query.setParameter("luxury" , bookings.getLuxury().ordinal());
@@ -34,6 +35,10 @@ public class BookingServiceImpl implements BookingService {
             List<Rooms> rooms =  query.list();
             return rooms;
         }
+
+//        select * from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id) " +
+//        "join rooms on rooms.id=bookings_rooms.room_id) " +
+//            "join hotels on rooms.id_hotel=hotels.id) where hotels.id=:id
         catch (Exception e){
             System.out.println("Failed roomsByCriteria" + bookings);
             throw e;

@@ -13,20 +13,20 @@
         <form action="${pageContext.request.contextPath}/reg" method="post">
             <table cellpadding="3pt" style="display: flex;justify-content: center;">
                 <tr>
-                    <td>Person FirstName :</td>
-                    <td><input type="text" name="firstName" size="30"></td>
+                    <td>Person Luxury :</td>
+                    <td><input type="text" name="luxury" size="30" value="ECONOM"></td>
                 </tr>
                 <tr>
-                    <td>Person LastName :</td>
-                    <td><input type="text" name="lastName" size="30"></td>
+                    <td>Person Bedrooms :</td>
+                    <td><input type="text" name="bedrooms" size="30"  value="DOUBLE"></td>
                 </tr>
                 <tr>
-                    <td>Person Passport :</td>
-                    <td><input type="text" name="passport" size="30"></td>
+                    <td>Person start :</td>
+                    <td><input type="text" name="start" size="30"  value="2020-03-14"></td>
                 </tr>
                 <tr>
-                    <td>Person Age :</td>
-                    <td><input type="text" name="age" size="30"></td>
+                    <td>Person end :</td>
+                    <td><input type="text" name="end" size="30" value="2020-03-15"></td>
                 </tr>
             </table>
             <p/>
