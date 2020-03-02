@@ -20,7 +20,7 @@ public interface TravelService {
 
     List<Visa> amountOfVisaPerson(Person person);
 
-    int amountOfVisaCountry(Country country);
+    List<Visa> amountOfVisaCountry(String country);
 
     boolean bookHotelForPerson(Bookings bookings);
 

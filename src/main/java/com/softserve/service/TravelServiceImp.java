@@ -94,13 +94,13 @@ public class TravelServiceImp implements TravelService {
     }
 
     @Override
-    public int amountOfVisaCountry(Country country) {
+    public List<Visa> amountOfVisaCountry(String country) {
         try (Session session = sessionFactory.openSession()) {
-            String sql = "select * from visa where id_country=:id";
+            String sql = "select * from visa join countries where country=:country";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Visa.class);
-            query.setParameter("id", country.getId());
-            return query.list().size();
+            query.setParameter("country", country);
+            return query.list();
         } catch (Exception e) {
             System.out.println("Failed amountOfVisaPerson" + country);
             throw e;
