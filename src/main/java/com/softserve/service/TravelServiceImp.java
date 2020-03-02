@@ -18,7 +18,6 @@ public class TravelServiceImp implements TravelService {
 
     public TravelServiceImp() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
-
     }
 
     @Override
@@ -109,7 +108,19 @@ public class TravelServiceImp implements TravelService {
     }
 
     @Override
-    public boolean bookHotelForPerson(Person person, Hotel hotel, java.sql.Date date) {
-        return false;
+    public boolean bookHotelForPerson(Bookings bookings)  {
+        try (Session session = sessionFactory.openSession()) {
+            String sql = "select * from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id) " +
+                "join rooms on rooms.id=bookings_rooms.room_id) " +
+                "join hotels on rooms.id_hotel=hotels.id)where bookings.id_person=:id";
+            SQLQuery query = session.createSQLQuery(sql);
+            query.addEntity(Bookings.class);
+            query.setParameter("id", bookings.getPerson().getId());
+            List<Bookings> bookingsList = query.list();
+            return Bookings.ifPossibleToBook(bookingsList, bookings);
+        } catch (Exception e) {
+            System.out.println("Failed amountOfVisaPerson" + bookings.getHotel());
+            throw e;
+        }
     }
 }

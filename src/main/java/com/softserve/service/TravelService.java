@@ -6,7 +6,6 @@ import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
 import com.softserve.entity.Person;
 import com.softserve.entity.Visa;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface TravelService {
@@ -23,7 +22,7 @@ public interface TravelService {
 
     int amountOfVisaCountry(Country country);
 
-    boolean bookHotelForPerson(Person person, Hotel hotel, java.sql.Date date);
+    boolean bookHotelForPerson(Bookings bookings);
 
 
 }

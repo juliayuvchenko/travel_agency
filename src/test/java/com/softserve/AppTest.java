@@ -1,41 +1,24 @@
 package com.softserve;
 
-//import com.softserve.entity.Bookings;
-//import com.softserve.entity.City;
-//import com.softserve.entity.Country;
-//import com.softserve.entity.Hotel;
-//import com.softserve.entity.Person;
-//import com.softserve.entity.Rooms;
-//import com.softserve.entity.Visa;
-import com.softserve.dao.TravelServiceImp;
-import com.softserve.dao.interfaces.TravelService;
+import com.softserve.entity.Country;
+
 
 import com.softserve.service.BookingService;
 import com.softserve.service.BookingServiceImpl;
-import com.softserve.service.HotelService;
-import com.softserve.service.HotelServiceImpl;
-//import com.softserve.service.TravelService;
-//import com.softserve.service.TravelServiceImp;
-//import java.time.LocalDate;
-//import java.util.List;
+import com.softserve.service.TravelService;
+import com.softserve.service.TravelServiceImp;
+import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-//import org.junit.Test;
-//
-//import java.time.LocalDate;
-//import java.util.List;
-//
-//import static com.softserve.entity.Rooms.Bedrooms.DOUBLE;
-//import static com.softserve.entity.Rooms.Bedrooms.SINGLE;
-//import static com.softserve.entity.Rooms.Luxury.BUSINESS;
-//
-//import static junit.framework.TestCase.assertEquals;
-//
-//import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+
+import static junit.framework.TestCase.assertEquals;
+
+import static org.junit.Assert.assertEquals;
 
 
 /**
@@ -43,18 +26,14 @@ import org.junit.BeforeClass;
  */
 public class AppTest {
     private static SessionFactory sessionFactory = null;
-    private static TravelService travelService;
+    //  private static TravelService travelService;
 
-//    static TravelService travelService;
-    static HotelService hotelService;
+    static TravelService travelService;
     static BookingService bookingService;
 
     @BeforeClass
     public static void setUp() throws Exception {
         travelService = TravelServiceImp.travelService;
-
-
-        hotelService = HotelServiceImpl.hotelService;
         bookingService = BookingServiceImpl.bookingService;
 
         sessionFactory = new Configuration().configure().buildSessionFactory();
@@ -75,37 +54,32 @@ public class AppTest {
     public static void tearDown() throws Exception {
         sessionFactory.close();
     }
-//
-//    @Test
-//    public void testSaveCountries() {
-//
-//        System.out.println("testSaveOperation begins ........ This is \"C\" of CRUD");
-//
-//        System.out.println("testSaveCountries begins ........ This is \"C\" of CRUD");
-//
-//
-//        Session session = sessionFactory.openSession();
-//        session.beginTransaction();
-//
-//        Country country = new Country("Ukraine");
-//
-//        Country country2 = new Country("USA");
-//        session.save(country);
-//        session.save(country2);
-//
-//          Country country2 = new Country( "USA" );
-//        session.save(country);
-//          session.save( country2 );
-//
-//        session.getTransaction().commit();
-//        session.close();
-//        System.out.println("testSaveCountries ends .......");
-//        List<Country> findHotels = travelService.findCountry();
-//
-////        assertEquals(2, findHotels.size());
-////        assertEquals(country, (findHotels.get(0)));
-////        assertEquals(country2, (findHotels.get(1)));
-//    }
+
+    @Test
+    public void testSaveCountries() {
+
+        System.out.println("testSaveOperation begins ........ This is \"C\" of CRUD");
+
+        System.out.println("testSaveCountries begins ........ This is \"C\" of CRUD");
+
+
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+
+        Country country = new Country("Ukraine");
+
+        Country country2 = new Country("USA");
+        session.save(country);
+        session.save(country2);
+
+        session.getTransaction().commit();
+        session.close();
+        System.out.println("testSaveCountries ends .......");
+        List<Country> findHotels = travelService.findCountry();
+
+        assertEquals(2, findHotels.size());
+
+    }
 //
 //
 //    @Test
