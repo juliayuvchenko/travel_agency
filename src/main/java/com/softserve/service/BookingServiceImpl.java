@@ -5,11 +5,9 @@ import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Hotel;
 import com.softserve.entity.Rooms;
-import java.math.RoundingMode;
+import java.awt.print.Book;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -19,7 +17,7 @@ public class BookingServiceImpl implements BookingService {
 
     private final SessionFactory sessionFactory;
     public static BookingService bookingService = new BookingServiceImpl();
-
+    private final Bookings bookings = new Bookings();
     public BookingServiceImpl() {
         sessionFactory = new Configuration().configure().buildSessionFactory();
 

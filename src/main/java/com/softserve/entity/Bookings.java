@@ -3,6 +3,7 @@ package com.softserve.entity;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -138,6 +139,56 @@ public class Bookings {
     public void setPerson(Person person) {
         this.person = person;
     }
+
+    public static boolean ifPossibleToBook(List<Bookings> bookingList, Bookings booking) {
+        boolean bool = false;
+        if (bookingList == null || bookingList.size() == 0) {
+            return true;
+        }
+        if (bookingList.get(0).checkin.compareTo(booking.checkout) >= 0) {    //>=
+            return true;
+        }
+        if (bookingList.get(bookingList.size() - 1).checkout.compareTo(booking.checkin) <= 0) {   //<=
+            return true;
+        }
+
+
+        for (int i = 0; i < bookingList.size(); i++) {
+            if (bookingList.get(i).checkout.compareTo(booking.checkin) <= 0
+                && booking.checkout.compareTo(bookingList.get(i + 1).checkin) <= 0) {     //<= && <=
+                bool = true;
+            }
+        }
+
+        return bool;
+    }
+    public static List<Hotel> whichHotelPossibleToBook(List<Bookings> bookingList, Bookings booking) {
+        List<Hotel> hotel = new ArrayList<Hotel>();
+        if (bookingList == null || bookingList.size() == 0) {
+            throw new RuntimeException("Data Base is empty or is null.");
+        }
+        if (bookingList.get(0).checkin.compareTo(booking.checkout) >= 0) {    //>=
+           hotel.add(bookingList.get(0).getHotel());
+           return hotel;
+        }
+        if (bookingList.get(bookingList.size() - 1).checkout.compareTo(booking.checkin) <= 0) {     //<=
+            final int lastObjectInBookingList = bookingList.size() - 1;
+            hotel.add(bookingList.get(lastObjectInBookingList).getHotel());
+            return hotel;
+        }
+
+
+        for (int i = 0; i < bookingList.size(); i++) {
+            if (bookingList.get(i).checkout.compareTo(booking.checkin) <= 0
+                && booking.checkout.compareTo(bookingList.get(i + 1).checkin) <= 0) {     //<= && <=
+               hotel.add(bookingList.get(i).getHotel());
+            }
+        }
+
+        return hotel;
+    }
+
+
 
     @Override
     public boolean equals(Object o) {
