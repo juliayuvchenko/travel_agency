@@ -24,6 +24,5 @@ public interface TravelService {
 
     boolean bookHotelForPerson(Bookings bookings);
 
-
     List<City> findCity(String city);
 }
