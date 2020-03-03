@@ -4,7 +4,6 @@ import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
-import com.softserve.entity.Person;
 import com.softserve.entity.Visa;
 import java.util.List;
 import org.hibernate.SQLQuery;
@@ -114,14 +113,18 @@ public class TravelServiceImp implements TravelService {
     @Override
     public boolean bookHotelForPerson(Bookings bookings)  {
         try (Session session = sessionFactory.openSession()) {
-            String sql = "select * from (((bookings join bookings_rooms on bookings.id=bookings_rooms.bookings_id) " +
-                "join rooms on rooms.id=bookings_rooms.room_id) " +
-                "join hotels on rooms.id_hotel=hotels.id)where bookings.id_person=:id";
+            String sql = "select * from ((visa inner join person on person.id=visa.id_person)" +
+                "inner join countries on visa.id_country=countries.id )" +
+                " where countries.country=:country and person.id=:id";
             SQLQuery query = session.createSQLQuery(sql);
             query.addEntity(Bookings.class);
+            query.setParameter("country", bookings.getCity().getCountry().getCountry());
             query.setParameter("id", bookings.getPerson().getId());
             List<Bookings> bookingsList = query.list();
-            return Bookings.ifPossibleToBook(bookingsList, bookings);
+            if (bookingsList.size()==0){
+                return false;
+            }else
+                return Bookings.ifPossibleToBook(bookingsList, bookings);
         } catch (Exception e) {
             System.out.println("Failed amountOfVisaPerson" + bookings.getHotel());
             throw e;

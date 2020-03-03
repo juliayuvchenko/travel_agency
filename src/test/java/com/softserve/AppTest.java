@@ -328,8 +328,8 @@ public class AppTest {
 //        book1.setHotel(h2);
 //        book1.setRoom(book1.getAddRoom(r1));
 //        session.save(book1);
-//        Bookings book2 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
-//            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, lviv);
+        Bookings book2 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, lviv);
 //        book2.setPerson(person);
 //        book2.setHotel(h2);
 //        book2.setRoom(book2.getAddRoom(r1));

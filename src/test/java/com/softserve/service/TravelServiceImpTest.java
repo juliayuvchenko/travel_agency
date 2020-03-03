@@ -1,5 +1,6 @@
 package com.softserve.service;
 
+import com.softserve.entity.Bookings;
 import com.softserve.entity.City;
 import com.softserve.entity.Country;
 import com.softserve.entity.Hotel;
@@ -82,6 +83,22 @@ public class TravelServiceImpTest {
     private static Visa visa7 ;
     private static Visa visa8 ;
     private static Visa visa9 ;
+
+    private static Bookings book1;
+    private static Bookings book2;
+    private static Bookings book3;
+    private static Bookings book4;
+    private static Bookings book5;
+    private static Bookings book6;
+    private static Bookings book7;
+    private static Bookings book8;
+    private static Bookings book9;
+    private static Bookings book10;
+    private static Bookings book11;
+    private static Bookings book12;
+    private static Bookings book13;
+    private static Bookings book14;
+    private static Bookings book15;
 
 
     @BeforeClass
@@ -254,6 +271,111 @@ public class TravelServiceImpTest {
         visa9.setPerson(person9);
         session.save(visa9);
 
+        book1 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, kyiv);
+        book1.setPerson(person1);
+        book1.setHotel(h1);
+        book1.getRoom().add(r1);
+        book1.setRoom(book1.getRoom());
+        session.save(book1);
+        book2 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 28)), 1, BUSINESS,SINGLE, lviv);
+        book2.setPerson(person2);
+        book2.setHotel(h2);
+        book2.getRoom().add(r2);
+        book2.setRoom(book2.getRoom());
+        session.save(book2);
+        book3 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 21)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, washington);
+        book3.setPerson(person3);
+        book3.setHotel(h3);
+        book3.getRoom().add(r3);
+        book3.setRoom(book3.getRoom());
+        session.save(book3);
+        book4 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 27)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 30)), 1, BUSINESS,SINGLE, krakow);
+        book4.setPerson(person4);
+        book4.setHotel(h4);
+        book4.getRoom().add(r4);
+        book4.setRoom(book4.getRoom());
+        session.save(book4);
+        book5 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 27)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 30)), 1, BUSINESS,SINGLE, berlin);
+        book5.setPerson(person5);
+        book5.setHotel(h5);
+        book5.getRoom().add(r5);
+        book5.setRoom(book5.getRoom());
+        session.save(book5);
+        book6 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 21)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, paris);
+        book6.setPerson(person6);
+        book6.setHotel(h6);
+        book6.getRoom().add(r6);
+        book6.setRoom(book6.getRoom());
+        session.save(book6);
+        book7 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, london);
+        book7.setPerson(person7);
+        book7.setHotel(h7);
+        book7.getRoom().add(r7);
+        book7.setRoom(book7.getRoom());
+        session.save(book7);
+        book8 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 20)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, sydney);
+        book8.setPerson(person8);
+        book8.setHotel(h8);
+        book8.getRoom().add(r8);
+        book8.setRoom(book8.getRoom());
+        session.save(book8);
+        book9 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 30)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 07, 04)), 1, BUSINESS,SINGLE, kyiv);
+        book9.setPerson(person9);
+        book9.setHotel(h1);
+        book9.getRoom().add(r1);
+        book9.setRoom(book9.getRoom());
+        session.save(book9);
+        book10 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 15)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 17)), 1, BUSINESS,SINGLE, lviv);
+        book10.setPerson(person1);
+        book10.setHotel(h2);
+        book10.getRoom().add(r2);
+        book10.setRoom(book10.getRoom());
+        session.save(book10);
+        book11 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 01)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 14)), 1, BUSINESS,SINGLE, washington);
+        book11.setPerson(person2);
+        book11.setHotel(h3);
+        book11.getRoom().add(r3);
+        book11.setRoom(book11.getRoom());
+        session.save(book11);
+        book12 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 05)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 10)), 1, BUSINESS,SINGLE, krakow);
+        book12.setPerson(person3);
+        book12.setHotel(h4);
+        book12.getRoom().add(r4);
+        book12.setRoom(book12.getRoom());
+        session.save(book12);
+        book13 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 15)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, berlin);
+        book13.setPerson(person4);
+        book13.setHotel(h5);
+        book13.getRoom().add(r5);
+        book13.setRoom(book13.getRoom());
+        session.save(book13);
+        book14 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 13)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 14)), 1, BUSINESS,SINGLE, paris);
+        book14.setPerson(person1);
+        book14.setHotel(h6);
+        book14.getRoom().add(r6);
+        book14.setRoom(book14.getRoom());
+        session.save(book14);
+        book15 = new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 10)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 14)), 1, BUSINESS,SINGLE, london);
+        book15.setPerson(person6);
+        book15.setHotel(h7);
+        book15.getRoom().add(r7);
+        book15.setRoom(book15.getRoom());
+        session.save(book15);
 
         session.getTransaction().commit();
         session.close();
@@ -283,40 +405,41 @@ public class TravelServiceImpTest {
 
     @Test
     public void testFindHotelByDate() {
-        System.out.println(" begins ........");
-//assertEquals(,travelService.findHotelByDate() );
-        System.out.println(" ends ........");
+        System.out.println("testFindHotelByDate begins ........");
+        Bookings newBook= new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 15)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, lviv);
+        newBook.setHotel(h2);
+        assertEquals(true,travelService.findHotelByDate(newBook) );
+        System.out.println("testFindHotelByDate ends ........");
     }
 
     @Test
     public void testFindAvailableHotel() {
-        System.out.println(" begins ........");
-
-        System.out.println(" ends ........");
+        System.out.println("testFindAvailableHotel begins ........");
+        Bookings newBook= new Bookings(java.sql.Date.valueOf(LocalDate.of(2020, 06, 15)),
+            java.sql.Date.valueOf(LocalDate.of(2020, 06, 24)), 1, BUSINESS,SINGLE, lviv);
+        assertEquals(1, travelService.findAvailableHotel(newBook).size());
+        System.out.println("testFindAvailableHotel ends ........");
     }
 
     @Test
     public void testAmountOfVisaPerson() {
-        System.out.println(" begins ........");
+        System.out.println("testAmountOfVisaPerson begins ........");
 
-        System.out.println(" ends ........");
+        System.out.println("testAmountOfVisaPerson ends ........");
     }
 
     @Test
     public void testAmountOfVisaCountry() {
-        System.out.println(" begins ........");
+        System.out.println("testAmountOfVisaCountry begins ........");
 
-        System.out.println(" ends ........");
+        System.out.println("testAmountOfVisaCountry ends ........");
     }
 
     @Test
     public void testBookHotelForPerson() {
-        System.out.println(" begins ........");
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
+        System.out.println("testBookHotelForPerson begins ........");
 
-        session.getTransaction().commit();
-        session.close();
-        System.out.println(" ends ........");
+        System.out.println("testBookHotelForPerson ends ........");
     }
 }
